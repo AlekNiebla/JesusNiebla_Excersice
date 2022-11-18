@@ -1,0 +1,7 @@
+{
+    "baseUrl": "https://devexpress.github.io/testcafe/example",
+    "requestTimeout": 60000,
+    "responseTimeout": 60000,
+    "viewpoerHeight": 1080,
+    "viewportWidth": 1920
+}
