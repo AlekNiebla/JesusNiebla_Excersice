@@ -6,7 +6,8 @@ import {
 import { 
 	SUBMIT_BUTTON,
 	POPULATE_BUTTON,
-	NAME_INPUT
+	NAME_INPUT,
+	THANKYOU_HEADER
 } from '../support/selectors'
 
 describe('Brightcove from excersice', () => {
@@ -146,7 +147,7 @@ describe('Brightcove from excersice', () => {
 	})
 
 	it('User validates Thanks you page contains the expected name', () => {
-		cy.get('[data-testid="thank-you-header"]')
+		cy.get(THANKYOU_HEADER)
 			.should('be.visible')
 			.and('contain',USER_NAME)
 	})
