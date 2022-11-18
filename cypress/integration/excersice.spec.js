@@ -3,6 +3,12 @@ import {
 	OS_FIELDSET_SECTION
 } from '../support/constants';
 
+import { 
+	SUBMIT_BUTTON,
+	POPULATE_BUTTON,
+	NAME_INPUT
+} from '../support/selectors'
+
 describe('Brightcove from excersice', () => {
 
 	const USER_NAME = 'Jesus Alejandro Niebla'
@@ -17,13 +23,13 @@ describe('Brightcove from excersice', () => {
 	})
 
 	it('validates Submit button is disabled', () => {
-		cy.get('[data-testid="submit-button"]')
+		cy.get(SUBMIT_BUTTON)
 			.should('be.disabled')
 		
 	})
 
 	it('Click Populate to fill in a default name', () => {
-		cy.get('[data-testid="populate-button"]')
+		cy.get(POPULATE_BUTTON)
 			.should('be.visible')
 			.and('be.enabled')
 			.click()
@@ -33,7 +39,7 @@ describe('Brightcove from excersice', () => {
 			return true;
 			});
 		// confirm default name has been written
-		cy.get('[data-testid="name-input"]')
+		cy.get(NAME_INPUT)
 			.should('be.visible')
 			.and('be.enabled')
 			.and('have.value','Peter Parker')
@@ -41,7 +47,7 @@ describe('Brightcove from excersice', () => {
 
 
 	it('User can type into the name input', () => {
-		cy.get('[data-testid="name-input"]')
+		cy.get(NAME_INPUT)
 			.should('be.visible')
 			.and('be.enabled')
 			.then( name_input => {
@@ -109,7 +115,6 @@ describe('Brightcove from excersice', () => {
 	
 						cy.log('CLICKING MACOS RADIO BUTTON')
 						cy.get(OS_FIELDSET_SECTION.items.MACOS._sel_radioBtn).click()
-						cy.wait(500)
 						
 						// verify radio button is selected
 						cy.get(OS_FIELDSET_SECTION.items.MACOS._sel_radioBtn).should('be.checked')
@@ -132,15 +137,11 @@ describe('Brightcove from excersice', () => {
 				.should('be.visible')
 				.and('be.enabled')
 				.select('JavaScript API')
-
-				cy.wait(500)
 			})
 	})
 
 	it('User clicks Submit and verify URL changes', () => {
-		cy.get('[data-testid="submit-button"]')
-			.click()
-		cy.wait(500)
+		cy.get(SUBMIT_BUTTON).click()
 		cy.url().should('contain','/thank-you.html')
 	})
 
