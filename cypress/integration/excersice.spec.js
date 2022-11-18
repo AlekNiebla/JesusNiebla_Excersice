@@ -8,7 +8,8 @@ import {
 	SUBMIT_BUTTON,
 	POPULATE_BUTTON,
 	NAME_INPUT,
-	THANKYOU_HEADER
+	THANKYOU_HEADER,
+	TESTCAFE_INTERFACE_SELECT
 } from '../support/selectors'
 
 describe('Brightcove from excersice', () => {
@@ -193,7 +194,7 @@ describe('Brightcove from excersice', () => {
 			.should('be.visible')
 			.and('contain.text','Which TestCafe interface do you use:')
 			.within(() => {
-				cy.get('[data-testid="preferred-interface-select"]')
+				cy.get(TESTCAFE_INTERFACE_SELECT)
 				.should('be.visible')
 				.and('be.enabled')
 				.select('JavaScript API')
