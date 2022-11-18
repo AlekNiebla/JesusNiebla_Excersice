@@ -1,12 +1,16 @@
 import {
 	FEATURES_FIELDSET_SECTION, 
-	OS_FIELDSET_SECTION,
-	TESTCAFE_SECTION
+	OS_FIELDSET_SECTION
 } from '../support/constants';
 
 describe('Brightcove from excersice', () => {
 
 	const USER_NAME = 'Jesus Alejandro Niebla'
+	const FEATURES_OPTIONS = FEATURES_FIELDSET_SECTION.listItems
+
+    const REUSING_CODE = 1
+    const EASY_EMBEDDING_TO_CI = 3
+    const ADVANCES_TRAFFIC_ANALYSIS = 4
 
 	before( () => {
 		cy.visit('/', {timeout: 10000})
@@ -46,8 +50,7 @@ describe('Brightcove from excersice', () => {
 			})
 	})
 
-	//ADDED STEP
-	it('*User can select all options of the "Which features are important to you:" section', () => {
+	it('User select 3 features that are important to you', () => {
 		cy.get('[class="column col-1"]')
 			.children('fieldset').eq(1)
 			.should('be.visible')
@@ -59,68 +62,27 @@ describe('Brightcove from excersice', () => {
 					.not('be.checked')
 				})
 
-				cy.log('USER SELECTS ALL OPTIONS')
-				FEATURES_FIELDSET_SECTION.listItems.forEach(item => {
-					cy.get(item._sel_label)
-					.should('contain.text',item.text)
 
-					cy.get(item._sel_checkBox)
+				cy.log('USER SELECTS 3 OPTIONS')
+				cy.get(FEATURES_OPTIONS[REUSING_CODE]._sel_label)
+					.should('contain.text',FEATURES_FIELDSET_SECTION.listItems[REUSING_CODE].text)
+				
+				cy.get(FEATURES_OPTIONS[REUSING_CODE]._sel_checkBox)
 					.click()
-				})
+				
+				cy.get(FEATURES_OPTIONS[EASY_EMBEDDING_TO_CI]._sel_label)
+					.should('contain.text',FEATURES_FIELDSET_SECTION.listItems[EASY_EMBEDDING_TO_CI].text)
+				
+				cy.get(FEATURES_OPTIONS[EASY_EMBEDDING_TO_CI]._sel_checkBox)
+					.click()
+
+				cy.get(FEATURES_OPTIONS[ADVANCES_TRAFFIC_ANALYSIS]._sel_label)
+					.should('contain.text',FEATURES_FIELDSET_SECTION.listItems[ADVANCES_TRAFFIC_ANALYSIS].text)
+				
+				cy.get(FEATURES_OPTIONS[ADVANCES_TRAFFIC_ANALYSIS]._sel_checkBox)
+					.click()
+				
 			})
-	})
-
-	//ADDED STEP
-	it('*User clicks the "I have tried TestCafe" options and enables the reviews section', () => {
-		
-		cy.log('VERIFY TESTCAFE SECTION ELEMENTS ARE DISABLED')
-		cy.get(TESTCAFE_SECTION._sel_slider)
-			.should('be.visible')
-			.and('have.class', 'ui-state-disabled')
-		
-		cy.get(TESTCAFE_SECTION._sel_commentsTextArea)
-			.should('be.visible')
-			.and('be.disabled')
-
-		cy.get(TESTCAFE_SECTION._sel_label)
-			.should('contain.text',TESTCAFE_SECTION.label_text)
-
-		cy.get(TESTCAFE_SECTION._sel_section_checkBox)
-			.not('be.checked')
-			.click()
-			.then(_checkbox =>{
-				cy.get(_checkbox).should('be.checked')
-
-				cy.get(TESTCAFE_SECTION._sel_slider)
-					.should('be.visible')
-					.and('not.have.class', 'ui-state-disabled')
-		
-				cy.get(TESTCAFE_SECTION._sel_commentsTextArea)
-					.should('be.visible')
-					.and('be.enabled')
-					.type('This is a test text for the TestCafe Review')
-			})
-	})
-
-	//ADDED STEP
-
-	it('*Verify "Populate" Button opens a pop up and press Cancel', () => {
-		cy.get('[data-testid="populate-button"]')
-			.should('be.visible')
-			.and('be.enabled')
-			.click()
-
-		cy.on('window:confirm', (text) => {
-			expect(text).to.contains('Reset information before proceeding?');
-			return false;
-			});
-		// confirm name has not been changed
-		cy.get('[data-testid="name-input"]')
-			.should('be.visible')
-			.and('be.enabled')
-			.and('have.value',USER_NAME)
-
-		
 	})
 
 	it('User can select the MacOS option on primary Operating System', () => {
