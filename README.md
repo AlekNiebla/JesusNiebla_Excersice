@@ -1,4 +1,4 @@
-### Test excercise
+# Test excercise
 
 ## Prerequisites
 In order to run this suite it is necessary to hace node and npm on your computer installed
