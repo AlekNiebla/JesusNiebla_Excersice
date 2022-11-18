@@ -1,6 +1,7 @@
 import {
 	FEATURES_FIELDSET_SECTION, 
-	OS_FIELDSET_SECTION
+	OS_FIELDSET_SECTION,
+	TESTCAFE_SECTION
 } from '../support/constants';
 
 import { 
@@ -90,6 +91,64 @@ describe('Brightcove from excersice', () => {
 					.click()
 				
 			})
+	})
+
+	
+	//ADDED STEP
+	it.skip('*User clicks the "I have tried TestCafe" options and enables the reviews section', () => {
+
+		cy.log('VERIFY TESTCAFE SECTION ELEMENTS ARE DISABLED')
+		cy.get(TESTCAFE_SECTION._sel_slider)
+			.should('be.visible')
+			.and('have.class', 'ui-state-disabled')
+
+		cy.get(TESTCAFE_SECTION._sel_commentsTextArea)
+			.should('be.visible')
+			.and('be.disabled')
+
+		cy.get(TESTCAFE_SECTION._sel_label)
+			.should('contain.text',TESTCAFE_SECTION.label_text)
+
+		cy.get(TESTCAFE_SECTION._sel_section_checkBox)
+			.not('be.checked')
+			.click()
+			.then(_checkbox =>{
+				cy.get(_checkbox).should('be.checked')
+
+				cy.get(TESTCAFE_SECTION._sel_slider)
+					.should('be.visible')
+					.and('not.have.class', 'ui-state-disabled')
+
+				cy.get(TESTCAFE_SECTION._sel_commentsTextArea)
+					.should('be.visible')
+					.and('be.enabled')
+					.type('This is a test text for the TestCafe Review')
+			})
+	})
+
+	//ADDED STEP
+	it.skip('*Verify "Populate" Button opens a pop up and press Cancel', () => {
+		cy.get(NAME_INPUT)
+			.should('be.visible')
+			.and('be.enabled')
+
+		cy.get(POPULATE_BUTTON)
+			.should('be.visible')
+			.and('be.enabled')
+			.click()
+
+		cy.on('window:confirm', (text) => {
+			expect(text).to.contains('Reset information before proceeding?');
+			return false;
+			});
+
+		// confirm name has not been changed
+		cy.get(NAME_INPUT)
+			.should('be.visible')
+			.and('be.enabled')
+			.and('have.value',USER_NAME)
+
+
 	})
 
 	it('User can select the MacOS option on primary Operating System', () => {
